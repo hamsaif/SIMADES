@@ -9,7 +9,7 @@ import { UpdateKategoriDto } from './dto/update-kategori.dto';
 
 @Injectable()
 export class KategoriService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async create(createKategoriDto: CreateKategoriDto) {
     // Cek apakah kategori dengan nama yang sama
@@ -39,8 +39,22 @@ export class KategoriService {
     };
   }
 
-  findAll() {
-    return `This action returns all kategori`;
+  // Mengambil seluruh kategori
+  async findAll() {
+    // Ambil semua data kategori dari database
+    const kategori =
+      await this.prisma.kategori.findMany({
+
+        // Urutkan berdasarkan nama A-Z
+        orderBy: {
+          nama: 'asc',
+        },
+      });
+
+    return {
+      message: 'Kategori retrieved successfully',
+      data: kategori,
+    };
   }
 
   findOne(id: number) {
