@@ -95,8 +95,57 @@ export class AssetService {
     };
   }
 
-  update(id: string, updateAssetDto: UpdateAssetDto) {
-    return `This action updates a #${id} asset`;
+  // Mengubah data aset
+  async update(id: string, updateAssetDto: UpdateAssetDto) {
+    // Cek apakah aset ada
+    const asset = await this.prisma.asset.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!asset) {
+      throw new NotFoundException('Asset not found');
+    }
+
+    // Jika kategoriId dikirim,
+    // cek apakah kategori tersebut ada
+    if (updateAssetDto.kategoriId) {
+      const kategori = await this.prisma.kategori.findUnique({
+        where: {
+          id: updateAssetDto.kategoriId,
+        },
+      });
+
+      if (!kategori) {
+        throw new BadRequestException('Kategori not found');
+      }
+    }
+
+    // Update data aset
+    const updatedAsset = await this.prisma.asset.update({
+      where: {
+        id,
+      },
+
+      data: {
+        nama: updateAssetDto.nama,
+        deskripsi: updateAssetDto.deskripsi,
+        lokasi: updateAssetDto.lokasi,
+        foto: updateAssetDto.foto,
+        kondisi: updateAssetDto.kondisi,
+        kategoriId: updateAssetDto.kategoriId,
+      },
+
+      include: {
+        kategori: true,
+      },
+    });
+
+    return {
+      message: 'Asset updated successfully',
+      data: updatedAsset,
+    };
   }
 
   remove(id: string) {
