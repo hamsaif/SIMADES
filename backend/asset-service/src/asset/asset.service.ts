@@ -71,8 +71,28 @@ export class AssetService {
     };
   }
 
-  findOne(id: string) {
-    return `This action returns a #${id} asset`;
+  // Mengambil detail aset berdasarkan id
+  async findOne(id: string) {
+    // Cari aset beserta kategori
+    const asset = await this.prisma.asset.findUnique({
+      where: {
+        id,
+      },
+
+      include: {
+        kategori: true,
+      },
+    });
+
+    // Jika aset tidak ditemukan
+    if (!asset) {
+      throw new NotFoundException('Asset not found');
+    }
+
+    return {
+      message: 'Asset retrieved successfully',
+      data: asset,
+    };
   }
 
   update(id: string, updateAssetDto: UpdateAssetDto) {
