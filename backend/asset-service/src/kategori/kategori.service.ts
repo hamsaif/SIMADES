@@ -30,15 +30,17 @@ export class KategoriService {
     );
   }
   async create(createKategoriDto: CreateKategoriDto) {
-    // Cek apakah kategori dengan nama yang sama
-    // sudah ada di database
-    const existingKategori = await this.prisma.kategori.findUnique({
-      where: {
-        nama: createKategoriDto.nama,
-      },
-    });
+    // Normalisasi nama input user
+    const normalizedNama = this.normalizeNama(createKategoriDto.nama);
 
-    // Jika ada, hentikan proses
+    // Ambil semua kategori
+    const kategoriList = await this.prisma.kategori.findMany();
+
+    // Cari apakah ada kategori yang sama
+    const existingKategori = kategoriList.find(
+      (kategori) => this.normalizeNama(kategori.nama) === normalizedNama,
+    );
+
     if (existingKategori) {
       throw new BadRequestException('Kategori already exists');
     }
