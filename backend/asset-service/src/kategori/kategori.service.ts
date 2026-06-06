@@ -97,6 +97,10 @@ export class KategoriService {
 
   // Mengubah data kategori berdasarkan id
   async update(id: string, updateKategoriDto: UpdateKategoriDto) {
+    if (!updateKategoriDto.nama) {
+      throw new BadRequestException('Nama kategori is required');
+    }
+
     // Cari kategori berdasarkan id
     const kategori = await this.prisma.kategori.findUnique({
       where: {
@@ -108,17 +112,22 @@ export class KategoriService {
       throw new NotFoundException('Kategori not found');
     }
 
-    // Cek apakah nama baru sudah digunakan kategori lain
-    const existingKategori = await this.prisma.kategori.findFirst({
-      where: {
-        nama: updateKategoriDto.nama,
+    // Normalisasi nama baru
+    const normalizedNama = this.normalizeNama(updateKategoriDto.nama);
 
-        // selain kategori yang sedang diedit
+    // Ambil semua kategori selain kategori yang sedang diedit
+    const kategoriList = await this.prisma.kategori.findMany({
+      where: {
         NOT: {
           id,
         },
       },
     });
+
+    // Cari apakah nama sudah digunakan
+    const existingKategori = kategoriList.find(
+      (kategori) => this.normalizeNama(kategori.nama) === normalizedNama,
+    );
 
     if (existingKategori) {
       throw new BadRequestException('Kategori already exists');
