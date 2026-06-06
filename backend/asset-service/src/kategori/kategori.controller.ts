@@ -19,16 +19,16 @@ export class KategoriController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.kategoriService.findOne(+id);
+    return this.kategoriService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateKategoriDto: UpdateKategoriDto) {
-    return this.kategoriService.update(+id, updateKategoriDto);
+    return this.kategoriService.update(id, updateKategoriDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.kategoriService.remove(+id);
+    return this.kategoriService.remove(id);
   }
 }

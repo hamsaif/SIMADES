@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import {
   BadRequestException,
   Injectable,
@@ -9,7 +12,7 @@ import { UpdateKategoriDto } from './dto/update-kategori.dto';
 
 @Injectable()
 export class KategoriService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   async create(createKategoriDto: CreateKategoriDto) {
     // Cek apakah kategori dengan nama yang sama
@@ -42,14 +45,12 @@ export class KategoriService {
   // Mengambil seluruh kategori
   async findAll() {
     // Ambil semua data kategori dari database
-    const kategori =
-      await this.prisma.kategori.findMany({
-
-        // Urutkan berdasarkan nama A-Z
-        orderBy: {
-          nama: 'asc',
-        },
-      });
+    const kategori = await this.prisma.kategori.findMany({
+      // Urutkan berdasarkan nama A-Z
+      orderBy: {
+        nama: 'asc',
+      },
+    });
 
     return {
       message: 'Kategori retrieved successfully',
@@ -57,8 +58,24 @@ export class KategoriService {
     };
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} kategori`;
+  // Mengambil satu kategori berdasarkan id
+  async findOne(id: string) {
+    // Cari kategori berdasarkan UUID
+    const kategori = await this.prisma.kategori.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    // Jika kategori tidak ditemukan
+    if (!kategori) {
+      throw new NotFoundException('Kategori not found');
+    }
+
+    return {
+      message: 'Kategori retrieved successfully',
+      data: kategori,
+    };
   }
 
   update(id: number, updateKategoriDto: UpdateKategoriDto) {
