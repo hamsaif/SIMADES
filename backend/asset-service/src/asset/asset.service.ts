@@ -138,6 +138,25 @@ export class AssetService {
         throw new BadRequestException('Kategori not found');
       }
     }
+    if (updateAssetDto.nama) {
+      const normalizedNama = this.normalizeNama(updateAssetDto.nama);
+
+      const assetList = await this.prisma.asset.findMany({
+        where: {
+          NOT: {
+            id,
+          },
+        },
+      });
+
+      const existingAsset = assetList.find(
+        (asset) => this.normalizeNama(asset.nama) === normalizedNama,
+      );
+
+      if (existingAsset) {
+        throw new BadRequestException('Asset already exists');
+      }
+    }
 
     // Update data aset
     const updatedAsset = await this.prisma.asset.update({
