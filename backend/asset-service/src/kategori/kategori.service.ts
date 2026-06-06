@@ -78,8 +78,34 @@ export class KategoriService {
     };
   }
 
-  update(id: number, updateKategoriDto: UpdateKategoriDto) {
-    return `This action updates a #${id} kategori`;
+  // Mengubah data kategori berdasarkan id
+  async update(id: string, updateKategoriDto: UpdateKategoriDto) {
+    // Cari kategori berdasarkan id
+    const kategori = await this.prisma.kategori.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    // Jika tidak ditemukan
+    if (!kategori) {
+      throw new NotFoundException('Kategori not found');
+    }
+
+    // Update kategori
+    const updatedKategori = await this.prisma.kategori.update({
+      where: {
+        id,
+      },
+      data: {
+        nama: updateKategoriDto.nama,
+      },
+    });
+
+    return {
+      message: 'Kategori updated successfully',
+      data: updatedKategori,
+    };
   }
 
   remove(id: number) {
