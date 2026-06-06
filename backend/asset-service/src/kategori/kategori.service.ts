@@ -14,7 +14,7 @@ import { UpdateKategoriDto } from './dto/update-kategori.dto';
 export class KategoriService {
   constructor(private prisma: PrismaService) {}
 
-  // Filtrer nama kategori
+  // Filter nama kategori
   private normalizeNama(nama: string): string {
     return (
       nama

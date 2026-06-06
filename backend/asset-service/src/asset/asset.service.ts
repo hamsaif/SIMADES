@@ -14,6 +14,10 @@ import { UpdateAssetDto } from './dto/update-asset.dto';
 @Injectable()
 export class AssetService {
   constructor(private prisma: PrismaService) {}
+  // Filter nama aset
+  private normalizeNama(nama: string): string {
+    return nama.toLowerCase().replace(/\s+/g, '').trim();
+  }
   // Membuat aset baru
   async create(createAssetDto: CreateAssetDto) {
     // Cek apakah kategori ada
@@ -27,7 +31,20 @@ export class AssetService {
     if (!kategori) {
       throw new BadRequestException('Kategori not found');
     }
+    // Normalisasi nama input
+    const normalizedNama = this.normalizeNama(createAssetDto.nama);
 
+    // Ambil semua aset
+    const assetList = await this.prisma.asset.findMany();
+
+    // Cari aset dengan nama yang sama
+    const existingAsset = assetList.find(
+      (asset) => this.normalizeNama(asset.nama) === normalizedNama,
+    );
+
+    if (existingAsset) {
+      throw new BadRequestException('Asset already exists');
+    }
     // Simpan aset
     const asset = await this.prisma.asset.create({
       data: {
