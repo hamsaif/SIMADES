@@ -87,12 +87,26 @@ export class KategoriService {
       },
     });
 
-    // Jika tidak ditemukan
     if (!kategori) {
       throw new NotFoundException('Kategori not found');
     }
 
-    // Update kategori
+    // Cek apakah nama baru sudah digunakan kategori lain
+    const existingKategori = await this.prisma.kategori.findFirst({
+      where: {
+        nama: updateKategoriDto.nama,
+
+        // selain kategori yang sedang diedit
+        NOT: {
+          id,
+        },
+      },
+    });
+
+    if (existingKategori) {
+      throw new BadRequestException('Kategori already exists');
+    }
+
     const updatedKategori = await this.prisma.kategori.update({
       where: {
         id,
@@ -108,7 +122,7 @@ export class KategoriService {
     };
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} kategori`;
   }
 }
