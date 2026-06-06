@@ -5,11 +5,74 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+//
+// Kondisi aset yang tersedia
+//
+enum AssetCondition {
+  // Aset masih normal
+  BAIK
+
+  // Ada kerusakan kecil
+  RUSAK_RINGAN
+
+  // Kerusakan berat
+  RUSAK_BERAT
+}
+
+//
+// Tabel kategori aset
+//
+model Kategori {
+  // Primary Key UUID
+  id String @id @default(uuid())
+
+  // Nama kategori harus unik
+  nama String @unique
+
+  // Relasi:
+  // 1 kategori bisa memiliki banyak aset
+  assets Asset[]
+
+  // Timestamp otomatis
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+//
+// Tabel aset desa
+//
+model Asset {
+  // Primary Key UUID
+  id String @id @default(uuid())
+
+  // Nama aset
+  nama String
+
+  // Deskripsi aset
+  deskripsi String?
+
+  // Lokasi aset
+  lokasi String
+
+  // Kondisi aset
+  kondisi AssetCondition
+
+  // Foreign Key ke kategori
+  kategoriId String
+
+  // Relasi ke tabel kategori
+  kategori Kategori @relation(fields: [kategoriId], references: [id])
+
+  // Timestamp otomatis
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

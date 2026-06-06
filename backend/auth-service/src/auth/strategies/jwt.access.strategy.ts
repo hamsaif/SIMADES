@@ -19,7 +19,7 @@ export class JwtAccessStrategy extends PassportStrategy(Strategy, 'jwt') {
       secretOrKey: 'SIMADES_SECRET',
     });
   }
-
+  // eslint-disable-next-line @typescript-eslint/require-await
   async validate(payload: JwtPayload) {
     // payload berasal dari JWT yang sudah berhasil diverifikasi
 
