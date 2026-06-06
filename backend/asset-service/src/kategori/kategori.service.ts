@@ -14,6 +14,21 @@ import { UpdateKategoriDto } from './dto/update-kategori.dto';
 export class KategoriService {
   constructor(private prisma: PrismaService) {}
 
+  // Filtrer nama kategori
+  private normalizeNama(nama: string): string {
+    return (
+      nama
+
+        // huruf kecil semua
+        .toLowerCase()
+
+        // hapus semua spasi
+        .replace(/\s+/g, '')
+
+        // hapus spasi depan belakang
+        .trim()
+    );
+  }
   async create(createKategoriDto: CreateKategoriDto) {
     // Cek apakah kategori dengan nama yang sama
     // sudah ada di database
