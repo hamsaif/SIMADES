@@ -51,19 +51,35 @@ export class AssetService {
     };
   }
 
-  findAll() {
-    return `This action returns all asset`;
+  // Mengambil seluruh data aset
+  async findAll() {
+    // Ambil semua aset beserta kategori
+    const assets = await this.prisma.asset.findMany({
+      include: {
+        // Join ke tabel kategori
+        kategori: true,
+      },
+
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+
+    return {
+      message: 'Assets retrieved successfully',
+      data: assets,
+    };
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return `This action returns a #${id} asset`;
   }
 
-  update(id: number, updateAssetDto: UpdateAssetDto) {
+  update(id: string, updateAssetDto: UpdateAssetDto) {
     return `This action updates a #${id} asset`;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} asset`;
   }
 }
