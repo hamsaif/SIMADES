@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import {
-  adRequestException,
+  BadRequestException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
