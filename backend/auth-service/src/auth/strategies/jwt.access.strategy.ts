@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
+// PassportStrategy = class ini akan digunakan Passport
+// untuk membaca dan memvalidasi JWT
 import { PassportStrategy } from '@nestjs/passport';
 
 import { ExtractJwt, Strategy } from 'passport-jwt';
@@ -8,13 +10,24 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 export class JwtAccessStrategy extends PassportStrategy(Strategy, 'jwt') {
   constructor() {
     super({
+      // Ambil token dari:
+      // Authorization: Bearer TOKEN
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
 
+      // HARUS sama dengan secret saat login
       secretOrKey: 'SIMADES_SECRET',
     });
   }
 
   async validate(payload: any) {
+    // payload berasal dari JWT yang sudah berhasil diverifikasi
+
+    // contoh:
+    // {
+    //   sub: 'uuid-admin',
+    //   username: 'admin'
+    // }
+
     return payload;
   }
 }
