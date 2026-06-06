@@ -148,7 +148,29 @@ export class AssetService {
     };
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} asset`;
+  // Menghapus aset
+  async remove(id: string) {
+    // Cari aset berdasarkan id
+    const asset = await this.prisma.asset.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    // Jika aset tidak ditemukan
+    if (!asset) {
+      throw new NotFoundException('Asset not found');
+    }
+
+    // Hapus aset
+    await this.prisma.asset.delete({
+      where: {
+        id,
+      },
+    });
+
+    return {
+      message: 'Asset deleted successfully',
+    };
   }
 }
