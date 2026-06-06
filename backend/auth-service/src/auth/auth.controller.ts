@@ -12,7 +12,12 @@ import { AuthService } from './auth.service';
 import { JwtAccessGuard } from './guards/jwt.access.guard';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { LoginAuthDto } from './dto/login-auth.dto';
+import { JwtPayload } from './types/jwt-payload.type';
+import {Request} from "express";
 
+type RequestWithUser = Request & {
+  user: JwtPayload;
+};
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -28,13 +33,11 @@ export class AuthController {
   }
     // Endpoint yang hanya bisa diakses
   // jika membawa JWT yang valid
+
   @UseGuards(JwtAccessGuard)
   @Get('profile')
-  profile(@Req() req: any) {
+  profile(@Req() Req: RequestWithUser) {
 
-    // req.user berasal dari
-    // JwtAccessStrategy.validate()
-
-    return req.user;
+    return Req.user;
   }
 }
