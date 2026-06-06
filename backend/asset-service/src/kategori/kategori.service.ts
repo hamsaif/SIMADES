@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import {
   BadRequestException,
   Injectable,
@@ -10,10 +9,34 @@ import { UpdateKategoriDto } from './dto/update-kategori.dto';
 
 @Injectable()
 export class KategoriService {
-
   constructor(private prisma: PrismaService) {}
-  create(createKategoriDto: CreateKategoriDto) {
-    return 'This action adds a new kategori';
+
+  async create(createKategoriDto: CreateKategoriDto) {
+    // Cek apakah kategori dengan nama yang sama
+    // sudah ada di database
+    const existingKategori = await this.prisma.kategori.findUnique({
+      where: {
+        nama: createKategoriDto.nama,
+      },
+    });
+
+    // Jika ada, hentikan proses
+    if (existingKategori) {
+      throw new BadRequestException('Kategori already exists');
+    }
+
+    // Simpan kategori baru ke database
+    const kategori = await this.prisma.kategori.create({
+      data: {
+        nama: createKategoriDto.nama,
+      },
+    });
+
+    // Response yang dikirim ke client
+    return {
+      message: 'Kategori created successfully',
+      data: kategori,
+    };
   }
 
   findAll() {
