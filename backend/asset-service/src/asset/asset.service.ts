@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import {
   BadRequestException,
   Injectable,
@@ -11,8 +14,41 @@ import { UpdateAssetDto } from './dto/update-asset.dto';
 @Injectable()
 export class AssetService {
   constructor(private prisma: PrismaService) {}
-  create(createAssetDto: CreateAssetDto) {
-    return 'This action adds a new asset';
+  // Membuat aset baru
+  async create(createAssetDto: CreateAssetDto) {
+    // Cek apakah kategori ada
+    const kategori = await this.prisma.kategori.findUnique({
+      where: {
+        id: createAssetDto.kategoriId,
+      },
+    });
+
+    // Jika kategori tidak ditemukan
+    if (!kategori) {
+      throw new BadRequestException('Kategori not found');
+    }
+
+    // Simpan aset
+    const asset = await this.prisma.asset.create({
+      data: {
+        nama: createAssetDto.nama,
+
+        deskripsi: createAssetDto.deskripsi,
+
+        lokasi: createAssetDto.lokasi,
+
+        foto: createAssetDto.foto,
+
+        kondisi: createAssetDto.kondisi,
+
+        kategoriId: createAssetDto.kategoriId,
+      },
+    });
+
+    return {
+      message: 'Asset created successfully',
+      data: asset,
+    };
   }
 
   findAll() {
