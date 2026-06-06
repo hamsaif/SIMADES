@@ -122,7 +122,29 @@ export class KategoriService {
     };
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} kategori`;
+  // Menghapus kategori berdasarkan id
+  async remove(id: string) {
+    // Cari kategori terlebih dahulu
+    const kategori = await this.prisma.kategori.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    // Jika tidak ditemukan
+    if (!kategori) {
+      throw new NotFoundException('Kategori not found');
+    }
+
+    // Hapus kategori
+    await this.prisma.kategori.delete({
+      where: {
+        id,
+      },
+    });
+
+    return {
+      message: 'Kategori deleted successfully',
+    };
   }
 }
