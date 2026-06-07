@@ -1,7 +1,12 @@
 /* eslint-disable prettier/prettier */
 import {
+    Body,
     Controller,
+    Delete,
     Get,
+    Param,
+    Patch,
+    Post,
 } from '@nestjs/common';
 
 import { AssetService } from './asset.service';
