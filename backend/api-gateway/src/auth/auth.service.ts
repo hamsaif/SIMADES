@@ -5,12 +5,25 @@ import axios from 'axios';
 @Injectable()
 export class AuthService {
 
-  async login(data: any) {
+  // Forward request login ke auth-service
+  async login(body: any) {
 
     const response =
       await axios.post(
         'http://localhost:3001/auth/login',
-        data,
+        body,
+      );
+
+    return response.data;
+  }
+
+  // Forward request register ke auth-service
+  async register(body: any) {
+
+    const response =
+      await axios.post(
+        'http://localhost:3001/auth/register',
+        body,
       );
 
     return response.data;
