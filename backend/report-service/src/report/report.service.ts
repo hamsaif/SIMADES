@@ -51,10 +51,24 @@ export class ReportService {
     };
   }
 
-  findAll() {
-    return `This action returns all report`;
-  }
+  // Mengambil seluruh laporan
+  async findAll() {
 
+    // Ambil semua laporan
+    const reports =
+      await this.prisma.report.findMany({
+
+        // Laporan terbaru di atas
+        orderBy: {
+          createdAt: 'desc',
+        },
+      });
+
+    return {
+      message: 'Reports retrieved successfully',
+      data: reports,
+    };
+  }
   findOne(id: string) {
     return `This action returns a #${id} report`;
   }
