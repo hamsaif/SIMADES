@@ -10,10 +10,45 @@ import { UpdateReportDto } from './dto/update-report.dto';
 
 @Injectable()
 export class ReportService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
-  create(createReportDto: CreateReportDto) {
-    return 'This action adds a new report';
+  // Membuat laporan baru
+  async create(
+    createReportDto: CreateReportDto,
+  ) {
+
+    // Simpan laporan ke database
+    const report =
+      await this.prisma.report.create({
+        data: {
+
+          namaPelapor:
+            createReportDto.namaPelapor,
+
+          noHp:
+            createReportDto.noHp,
+
+          deskripsi:
+            createReportDto.deskripsi,
+
+          foto:
+            createReportDto.foto,
+
+          assetId:
+            createReportDto.assetId,
+
+          assetNama:
+            createReportDto.assetNama,
+
+          // NLP nanti mengisi field ini
+          prediksiKategori: null,
+        },
+      });
+
+    return {
+      message: 'Report created successfully',
+      data: report,
+    };
   }
 
   findAll() {
