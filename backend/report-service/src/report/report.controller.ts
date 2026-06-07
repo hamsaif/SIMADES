@@ -19,16 +19,16 @@ export class ReportController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.reportService.findOne(+id);
+    return this.reportService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateReportDto: UpdateReportDto) {
-    return this.reportService.update(+id, updateReportDto);
+    return this.reportService.update(id, updateReportDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.reportService.remove(+id);
+    return this.reportService.remove(id);
   }
 }
