@@ -5,14 +5,54 @@ import axios from 'axios';
 @Injectable()
 export class AssetService {
 
-  // Ambil seluruh asset
-  async findAll() {
+    // Ambil seluruh asset
+    async findAll() {
 
-    const response =
-      await axios.get(
-        'http://localhost:3002/asset',
-      );
+        const response =
+            await axios.get(
+                'http://localhost:3002/asset',
+            );
 
-    return response.data;
-  }
+        return response.data;
+    }
+    // Ambil asset berdasarkan id
+    async findOne(id: string) {
+        const response = await axios.get(
+            `http://localhost:3002/asset/${id}`,
+        );
+
+        return response.data;
+    }
+
+    // Tambah asset
+    async create(body: any) {
+        const response = await axios.post(
+            'http://localhost:3002/asset',
+            body,
+        );
+
+        return response.data;
+    }
+
+    // Update asset
+    async update(
+        id: string,
+        body: any,
+    ) {
+        const response = await axios.patch(
+            `http://localhost:3002/asset/${id}`,
+            body,
+        );
+
+        return response.data;
+    }
+
+    // Hapus asset
+    async remove(id: string) {
+        const response = await axios.delete(
+            `http://localhost:3002/asset/${id}`,
+        );
+
+        return response.data;
+    }
 }

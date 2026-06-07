@@ -133,7 +133,33 @@ export class ReportService {
     };
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} report`;
+  // Menghapus laporan
+  async remove(id: string) {
+
+    // Cari laporan berdasarkan id
+    const report =
+      await this.prisma.report.findUnique({
+        where: {
+          id,
+        },
+      });
+
+    // Jika laporan tidak ditemukan
+    if (!report) {
+      throw new NotFoundException(
+        'Report not found',
+      );
+    }
+
+    // Hapus laporan
+    await this.prisma.report.delete({
+      where: {
+        id,
+      },
+    });
+
+    return {
+      message: 'Report deleted successfully',
+    };
   }
 }
