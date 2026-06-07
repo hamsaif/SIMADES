@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import {
   Injectable,
+  NotFoundException,
 } from '@nestjs/common';
 
 import { PrismaService } from 'src/prisma.service';
@@ -69,8 +70,26 @@ export class ReportService {
       data: reports,
     };
   }
-  findOne(id: string) {
-    return `This action returns a #${id} report`;
+  // Mengambil satu data laporan
+  async findOne(id: string) {
+
+    const report =
+      await this.prisma.report.findUnique({
+        where: {
+          id,
+        },
+      });
+
+    if (!report) {
+      throw new NotFoundException(
+        'Report not found',
+      );
+    }
+
+    return {
+      message: 'Report retrieved successfully',
+      data: report,
+    };
   }
 
   update(id: string, updateReportDto: UpdateReportDto) {
