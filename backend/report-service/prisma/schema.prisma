@@ -5,11 +5,67 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+
+// Status laporan
+enum ReportStatus {
+
+  // Baru dibuat warga
+  MENUNGGU
+
+  // Sudah diverifikasi admin
+  DIVERIFIKASI
+
+  // Sedang diproses
+  DIPROSES
+
+  // Sudah selesai
+  SELESAI
+
+  // Ditolak admin
+  DITOLAK
+}
+
+// Tabel laporan 
+model Report {
+
+  // Primary Key UUID
+  id String @id @default(uuid())
+
+  // Nama pelapor (opsional)
+  namaPelapor String?
+
+  // Nomor HP pelapor (opsional)
+  noHp String?
+
+  // Deskripsi kerusakan
+  deskripsi String
+
+  // Foto laporan
+  foto String?
+
+  // ID Asset dari asset-service
+  assetId String
+
+  // Snapshot nama asset saat laporan dibuat
+  assetNama String
+
+  // Hasil prediksi NLP
+  prediksiKategori String?
+
+  // Status laporan
+  status ReportStatus @default(MENUNGGU)
+
+  // Catatan admin
+  catatanAdmin String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
