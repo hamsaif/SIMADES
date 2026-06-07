@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable prettier/prettier */
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import axios from 'axios';
 
 @Injectable()
@@ -17,12 +18,23 @@ export class AssetService {
     }
     // Ambil asset berdasarkan id
     async findOne(id: string) {
-        const response = await axios.get(
-            `http://localhost:3002/asset/${id}`,
-        );
+        try {
 
-        return response.data;
+            const response = await axios.get(
+                `http://localhost:3002/asset/${id}`,
+            );
+
+            return response.data;
+
+        } catch (error: any) {
+
+            throw new HttpException(
+                error.response.data,
+                error.response.status,
+            );
+        }
     }
+
 
     // Tambah asset
     async create(body: any) {
@@ -39,20 +51,40 @@ export class AssetService {
         id: string,
         body: any,
     ) {
-        const response = await axios.patch(
-            `http://localhost:3002/asset/${id}`,
-            body,
-        );
+        try {
 
-        return response.data;
+            const response = await axios.patch(
+                `http://localhost:3002/asset/${id}`,
+                body,
+            );
+
+            return response.data;
+
+        } catch (error: any) {
+
+            throw new HttpException(
+                error.response.data,
+                error.response.status,
+            );
+        }
     }
 
     // Hapus asset
     async remove(id: string) {
-        const response = await axios.delete(
-            `http://localhost:3002/asset/${id}`,
-        );
+        try {
 
-        return response.data;
+            const response = await axios.delete(
+                `http://localhost:3002/asset/${id}`,
+            );
+
+            return response.data;
+
+        } catch (error: any) {
+
+            throw new HttpException(
+                error.response.data,
+                error.response.status,
+            );
+        }
     }
 }
