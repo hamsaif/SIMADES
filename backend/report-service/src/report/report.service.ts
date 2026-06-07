@@ -92,8 +92,45 @@ export class ReportService {
     };
   }
 
-  update(id: string, updateReportDto: UpdateReportDto) {
-    return `This action updates a #${id} report`;
+  // Mengubah status laporan
+  async update(
+    id: string,
+    updateReportDto: UpdateReportDto,
+  ) {
+
+    // Cari laporan berdasarkan id
+    const report =
+      await this.prisma.report.findUnique({
+        where: {
+          id,
+        },
+      });
+
+    // Jika laporan tidak ditemukan
+    if (!report) {
+      throw new NotFoundException(
+        'Report not found',
+      );
+    }
+
+    // Update status dan catatan admin
+    const updatedReport =
+      await this.prisma.report.update({
+        where: {
+          id,
+        },
+
+        data: {
+          status: updateReportDto.status,
+          catatanAdmin:
+            updateReportDto.catatanAdmin,
+        },
+      });
+
+    return {
+      message: 'Report updated successfully',
+      data: updatedReport,
+    };
   }
 
   remove(id: string) {
