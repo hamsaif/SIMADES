@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   Injectable,
 } from '@nestjs/common';
@@ -9,6 +10,8 @@ import { UpdateReportDto } from './dto/update-report.dto';
 
 @Injectable()
 export class ReportService {
+  constructor(private prisma: PrismaService) {}
+
   create(createReportDto: CreateReportDto) {
     return 'This action adds a new report';
   }
