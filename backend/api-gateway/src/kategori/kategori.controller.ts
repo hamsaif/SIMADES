@@ -10,6 +10,8 @@ import {
 } from '@nestjs/common';
 
 import { KategoriService } from './kategori.service';
+import { UseGuards } from '@nestjs/common';
+import { JwtGuard } from '../auth/guards/jwt.guard';
 
 @Controller('kategori')
 export class KategoriController {
@@ -19,6 +21,7 @@ export class KategoriController {
   ) {}
 
   @Post()
+  @UseGuards(JwtGuard)
   create(@Body() body: any) {
     return this.kategoriService.create(body);
   }
@@ -34,6 +37,7 @@ export class KategoriController {
   }
 
   @Patch(':id')
+  @UseGuards(JwtGuard)
   update(
     @Param('id') id: string,
     @Body() body: any,
@@ -42,6 +46,7 @@ export class KategoriController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtGuard)
   remove(@Param('id') id: string) {
     return this.kategoriService.remove(id);
   }
