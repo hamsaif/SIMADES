@@ -1,9 +1,21 @@
-import { Text, View, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+} from 'react-native';
 
-export default function Index() {
+import { Colors } from '@/constants/colors';
+
+export default function HomeScreen() {
   return (
     <View style={styles.container}>
-      <Text>Edit src/app/index.tsx to edit this screen.</Text>
+      <Text style={styles.title}>
+        SIMADES
+      </Text>
+
+      <Text style={styles.subtitle}>
+        Sistem Informasi Manajemen Aset Desa
+      </Text>
     </View>
   );
 }
@@ -11,7 +23,20 @@ export default function Index() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: Colors.background,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  title: {
+    fontSize: 32,
+    fontWeight: '700',
+    color: Colors.primary,
+  },
+
+  subtitle: {
+    marginTop: 8,
+    fontSize: 16,
+    color: Colors.textSecondary,
   },
 });
