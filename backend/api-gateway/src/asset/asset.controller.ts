@@ -10,6 +10,9 @@ import {
 } from '@nestjs/common';
 
 import { AssetService } from './asset.service';
+import { UseGuards } from '@nestjs/common';
+
+import { JwtGuard } from '../auth/guards/jwt.guard';
 
 @Controller('asset')
 export class AssetController {
@@ -23,6 +26,7 @@ export class AssetController {
         return this.assetService.findAll();
     }
 
+    @UseGuards(JwtGuard)
     @Post()
     create(@Body() body: any) {
         return this.assetService.create(body);
@@ -33,6 +37,7 @@ export class AssetController {
         return this.assetService.findOne(id);
     }
 
+    @UseGuards(JwtGuard)
     @Patch(':id')
     update(
         @Param('id') id: string,
@@ -41,6 +46,7 @@ export class AssetController {
         return this.assetService.update(id, body);
     }
 
+    @UseGuards(JwtGuard)
     @Delete(':id')
     remove(@Param('id') id: string) {
         return this.assetService.remove(id);
