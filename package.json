@@ -2,17 +2,15 @@
   "name": "simades",
   "private": true,
   "scripts": {
-    "auth": "cd auth-service && npm run start:dev",
-    "asset": "cd asset-service && npm run start:dev",
-    "report": "cd report-service && npm run start:dev",
-    "gateway": "cd api-gateway && npm run start:dev",
+    "auth": "cd backend/auth-service && npm run start:dev",
+    "asset": "cd  backend/asset-service && npm run start:dev",
+    "report": "cd  backend/report-service && npm run start:dev",
+    "gateway": "cd  backend/api-gateway && npm run start:dev",
     "cms": "cd cms-admin && npm run dev",
     "mobile": "cd mobile-user && npm start",
-
     "backend": "concurrently -n AUTH,ASSET,REPORT,GATEWAY -c blue,green,yellow,magenta \"npm run auth\" \"npm run asset\" \"npm run report\" \"npm run gateway\"",
     "cms-web": "npm run cms",
     "mobile-user": "npm run mobile",
-
     "dev": "concurrently -n AUTH,ASSET,REPORT,GATEWAY,CMS -c blue,green,yellow,magenta,cyan \"npm run auth\" \"npm run asset\" \"npm run report\" \"npm run gateway\" \"npm run cms\""
   },
   "repository": {
