@@ -20,4 +20,34 @@ export default function LoginPage() {
 
     const [error, setError] =
         useState('');
+
+    const handleLogin = async (
+        e: React.FormEvent,
+    ) => {
+        e.preventDefault();
+
+        try {
+            setLoading(true);
+            setError('');
+
+            const repose =
+                await login(
+                    username,
+                    password,
+                );
+            
+            localStorage.setItem(
+                'token',
+                repose.access_token,
+            );
+
+            router.push('/dashboard');
+        } catch (err) {
+            setError(
+                'Username atau password salah',
+            );
+        } finally {
+            setLoading(false);
+        }
+    };
 }
