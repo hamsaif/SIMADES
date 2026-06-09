@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import axios from 'axios';
 
 @Injectable()
@@ -27,5 +27,26 @@ export class AuthService {
       );
 
     return response.data;
+  }
+  async profile(
+    authorization: string,
+  ) {
+    try {
+      const response = await axios.get(
+        'http://localhost:3001/auth/profile',
+        {
+          headers: {
+            Authorization: authorization,
+          },
+        },
+      );
+
+      return response.data;
+    } catch (error: any) {
+      throw new HttpException(
+        error.response.data,
+        error.response.status,
+      );
+    }
   }
 }
