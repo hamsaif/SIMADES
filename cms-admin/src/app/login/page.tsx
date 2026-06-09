@@ -56,7 +56,7 @@ export default function LoginPage() {
 
             <form
                 onSubmit={handleLogin}
-                className="w-full max-w-md rounded-lg bg-white p-8 shadow"
+                className="w-full max-w-md rounded-lg bg-white p-8 shadow text-black"
             >
 
                 <h1 className="mb-6 text-center text-2xl font-bold">
