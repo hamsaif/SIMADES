@@ -139,6 +139,15 @@ export default function KategoriPage() {
               </td>
 
               <td className="border p-3">
+                <button
+                  onClick={() => {
+                    setEditId(item.id);
+                    setEditNama(item.nama);
+                  }}
+                  className="rounded bg-yellow-500 px-3 py-1 text-white"
+                >
+                  Edit
+                </button>
 
                 <button
                   onClick={() =>
