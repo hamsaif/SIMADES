@@ -9,23 +9,21 @@ export default function AdminLayout({
 }) {
   return (
     <ProtectedRoute>
-
-      <div className="flex">
+      <div className="admin-layout">
 
         <Sidebar />
 
-        <div className="flex-1">
+        <div className="admin-main-wrapper">
 
           <Navbar />
 
-          <main className="p-6">
+          <main className="admin-main-content">
             {children}
           </main>
 
         </div>
 
       </div>
-
     </ProtectedRoute>
   );
 }
