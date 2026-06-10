@@ -21,6 +21,20 @@ export const createKategori = async (
   return response.data;
 };
 
+export const updateKategori = async (
+  id: string,
+  nama: string,
+) => {
+  const response = await api.patch(
+    `/kategori/${id}`,
+    {
+      nama,
+    },
+  );
+
+  return response.data;
+};
+
 export const deleteKategori = async (
   id: string,
 ) => {
