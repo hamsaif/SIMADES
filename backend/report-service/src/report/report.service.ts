@@ -9,9 +9,14 @@ import { PrismaService } from 'src/prisma.service';
 import { CreateReportDto } from './dto/create-report.dto';
 import { UpdateReportDto } from './dto/update-report.dto';
 
+import { NlpService } from './nlp.service';
+
 @Injectable()
 export class ReportService {
-  constructor(private prisma: PrismaService) { }
+  constructor(
+    private prisma: PrismaService,
+    private nlpService: NlpService,
+  ) { }
 
   // Membuat laporan baru
   async create(
@@ -36,13 +41,15 @@ export class ReportService {
             createReportDto.foto,
 
           assetId:
-            createReportDto.assetId,
+            createReportDto.assetId ?? '',
 
           assetNama:
-            createReportDto.assetNama,
+            createReportDto.assetNama ?? '',
 
-          // NLP nanti mengisi field ini
-          prediksiKategori: null,
+          // Klasifikasi kategori menggunakan NLP
+          prediksiKategori: this.nlpService.predictCategory(
+            createReportDto.deskripsi
+          ),
         },
       });
 

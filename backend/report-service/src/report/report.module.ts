@@ -3,8 +3,10 @@ import { ReportService } from './report.service';
 import { ReportController } from './report.controller';
 import { PrismaService } from 'src/prisma.service';
 
+import { NlpService } from './nlp.service';
+
 @Module({
   controllers: [ReportController],
-  providers: [ReportService, PrismaService],
+  providers: [ReportService, PrismaService, NlpService],
 })
 export class ReportModule {}

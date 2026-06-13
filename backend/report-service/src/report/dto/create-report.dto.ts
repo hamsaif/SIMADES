@@ -28,12 +28,12 @@ export class CreateReportDto {
     foto?: string;
 
     // Asset yang dilaporkan
+    @IsOptional()
     @IsString()
-    @IsNotEmpty()
-    assetId: string;
+    assetId?: string;
 
     // Nama asset
+    @IsOptional()
     @IsString()
-    @IsNotEmpty()
-    assetNama: string;
+    assetNama?: string;
 }

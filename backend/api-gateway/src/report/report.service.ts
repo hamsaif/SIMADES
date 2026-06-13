@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import {
   HttpException,
+  HttpStatus,
   Injectable,
 } from '@nestjs/common';
 
@@ -8,6 +9,22 @@ import axios from 'axios';
 
 @Injectable()
 export class ReportService {
+
+  // Helper untuk handle error axios secara konsisten
+  private handleError(error: any): never {
+    if (error.response) {
+      // Error dari report-service (4xx, 5xx)
+      throw new HttpException(
+        error.response.data,
+        error.response.status,
+      );
+    }
+    // Network error / report-service tidak berjalan
+    throw new HttpException(
+      { message: 'Report service tidak dapat dijangkau' },
+      HttpStatus.SERVICE_UNAVAILABLE,
+    );
+  }
 
   // Ambil seluruh laporan
   async findAll() {
@@ -22,11 +39,7 @@ export class ReportService {
       return response.data;
 
     } catch (error: any) {
-
-      throw new HttpException(
-        error.response.data,
-        error.response.status,
-      );
+      this.handleError(error);
     }
   }
 
@@ -43,11 +56,7 @@ export class ReportService {
       return response.data;
 
     } catch (error: any) {
-
-      throw new HttpException(
-        error.response.data,
-        error.response.status,
-      );
+      this.handleError(error);
     }
   }
 
@@ -65,11 +74,7 @@ export class ReportService {
       return response.data;
 
     } catch (error: any) {
-
-      throw new HttpException(
-        error.response.data,
-        error.response.status,
-      );
+      this.handleError(error);
     }
   }
 
@@ -90,11 +95,7 @@ export class ReportService {
       return response.data;
 
     } catch (error: any) {
-
-      throw new HttpException(
-        error.response.data,
-        error.response.status,
-      );
+      this.handleError(error);
     }
   }
 
@@ -111,11 +112,7 @@ export class ReportService {
       return response.data;
 
     } catch (error: any) {
-
-      throw new HttpException(
-        error.response.data,
-        error.response.status,
-      );
+      this.handleError(error);
     }
   }
 }
