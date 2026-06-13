@@ -20,7 +20,7 @@ Proyek ini terdiri dari beberapa layanan utama:
 
 ---
 
-## 📋 Prasyarat (Prerequisites)
+##  Prasyarat (Prerequisites)
 
 Sebelum memulai, pastikan perangkat Anda sudah terinstal:
 - [Node.js](https://nodejs.org/) (Versi terbaru/LTS)
@@ -30,7 +30,7 @@ Sebelum memulai, pastikan perangkat Anda sudah terinstal:
 
 ---
 
-## 🚀 Langkah Instalasi & Setup
+##  Langkah Instalasi & Setup
 
 Ikuti langkah-langkah berikut untuk menjalankan proyek di lokal:
 
@@ -80,7 +80,7 @@ cd backend/report-service && npx prisma generate && cd ../..
 
 ---
 
-## ⚡ Menjalankan Proyek
+## Menjalankan Proyek
 
 Gunakan command berikut di root direktori untuk menjalankan service:
 
@@ -95,28 +95,11 @@ npm run dev
 | :--- | :--- |
 | `npm run backend` | Menjalankan seluruh backend microservices |
 | `npm run gateway` | Menjalankan API Gateway saja |
+| `npm run auth` | Menjalankan service auth saja |
+| `npm run asset` | Menjalankan service asset saja |
+| `npm run report` | Menjalankan service report saja |
 | `npm run cms` | Menjalankan Dashboard Admin (Next.js) |
 | `npm run mobile` | Menjalankan Aplikasi Mobile (Expo) |
 
 ---
 
-## 📁 Struktur Folder
-```text
-SIMADES/
-├── backend/               # Microservices logic
-│   ├── api-gateway/       # Port 3000 (Default)
-│   ├── auth-service/
-│   ├── asset-service/
-│   └── report-service/
-├── cms-admin/             # Next.js Application
-├── mobile-user/           # Expo App
-└── dokumentasi/           # File dokumentasi tambahan
-```
-
----
-
-## 🛡️ Lisensi
-Proyek ini dilindungi di bawah lisensi **ISC**.
-
----
-*Dibuat dengan ❤️ untuk kemajuan desa.*
