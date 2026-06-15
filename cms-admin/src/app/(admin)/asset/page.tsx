@@ -24,6 +24,10 @@ const loadAsset = async () => {
   const response = await getAsset();
   setAsset(response.data);
 };
+
+useEffect(() => {
+  loadAsset();
+}, []);
   return (
     <article>
       <h2>Asset Desa</h2>
