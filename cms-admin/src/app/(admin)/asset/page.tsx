@@ -54,6 +54,11 @@ loadAsset();
       Asset Desa
     </h2>
   </header>
+
+  <section
+  className="card"
+  style={{ marginBottom: '20px' }}
+></section>
 </article>
   );
 }
