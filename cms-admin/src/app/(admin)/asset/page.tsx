@@ -19,6 +19,11 @@ export default function AssetPage() {
   kondisi: 'BAIK',
   kategoriId: '',
 });
+
+const loadAsset = async () => {
+  const response = await getAsset();
+  setAsset(response.data);
+};
   return (
     <article>
       <h2>Asset Desa</h2>
