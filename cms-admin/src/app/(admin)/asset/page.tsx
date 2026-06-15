@@ -60,8 +60,13 @@ loadAsset();
   style={{ marginBottom: '20px' }}>
 <form
   onSubmit={handleSubmit}
-  className="form-group"
-></form>
+  className="form-group">
+<input
+  className="input-control"
+  placeholder="Nama Asset"
+  value={form.nama}
+/>
+</form>
 </section>
 </article>
   );
