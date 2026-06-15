@@ -76,6 +76,12 @@ loadAsset();
   placeholder="Deskripsi"
   value={form.deskripsi}
 />
+<button
+  className="btn btn-primary"
+  type="submit"
+>
+  Tambah Asset
+</button>
 </form>
 </section>
 </article>
