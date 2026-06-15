@@ -22,3 +22,12 @@ export const updateAsset = async (
   return response.data;
 };
 
+export const deleteAsset = async (
+  id: string,
+) => {
+  const response = await api.delete(
+    `/asset/${id}`,
+  );
+
+  return response.data;
+};
