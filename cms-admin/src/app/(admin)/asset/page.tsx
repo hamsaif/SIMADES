@@ -28,6 +28,14 @@ const loadAsset = async () => {
 useEffect(() => {
   loadAsset();
 }, []);
+
+const handleSubmit = async (
+  e: React.FormEvent,
+) => {
+  e.preventDefault();
+
+  await createAsset(form);
+};
   return (
     <article>
       <h2>Asset Desa</h2>
