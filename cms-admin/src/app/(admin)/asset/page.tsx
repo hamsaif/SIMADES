@@ -48,8 +48,12 @@ const handleSubmit = async (
 loadAsset();
 };
   return (
-    <article>
-      <h2>Asset Desa</h2>
-    </article>
+    <article className="page-container">
+  <header className="page-header">
+    <h2 className="page-title">
+      Asset Desa
+    </h2>
+  </header>
+</article>
   );
 }
