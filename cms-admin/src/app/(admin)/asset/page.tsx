@@ -71,6 +71,11 @@ loadAsset();
   placeholder="Lokasi"
   value={form.lokasi}
 />
+<textarea
+  className="input-control"
+  placeholder="Deskripsi"
+  value={form.deskripsi}
+/>
 </form>
 </section>
 </article>
