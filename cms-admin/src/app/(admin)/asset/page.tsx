@@ -66,6 +66,11 @@ loadAsset();
   placeholder="Nama Asset"
   value={form.nama}
 />
+<input
+  className="input-control"
+  placeholder="Lokasi"
+  value={form.lokasi}
+/>
 </form>
 </section>
 </article>
