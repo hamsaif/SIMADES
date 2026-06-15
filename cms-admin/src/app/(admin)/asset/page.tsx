@@ -1,3 +1,9 @@
+'use client';
+
 export default function AssetPage() {
-  return <h1>Asset</h1>;
+  return (
+    <article>
+      <h2>Asset Desa</h2>
+    </article>
+  );
 }
