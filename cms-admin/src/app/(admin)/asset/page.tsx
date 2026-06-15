@@ -35,6 +35,15 @@ const handleSubmit = async (
   e.preventDefault();
 
   await createAsset(form);
+
+  setForm({
+  nama: '',
+  deskripsi: '',
+  lokasi: '',
+  foto: '',
+  kondisi: 'BAIK',
+  kategoriId: '',
+});
 };
   return (
     <article>
