@@ -84,6 +84,16 @@ loadAsset();
 </button>
 </form>
 </section>
+
+ <section className="card">
+  <table className="data-table">
+    <thead>
+      <tr>
+        <th>Nama</th>
+<th>Lokasi</th>
+<th>Kondisi</th>
+  </table>
+ </section>
 </article>
   );
 }
