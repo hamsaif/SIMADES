@@ -44,6 +44,8 @@ const handleSubmit = async (
   kondisi: 'BAIK',
   kategoriId: '',
 });
+
+loadAsset();
 };
   return (
     <article>
