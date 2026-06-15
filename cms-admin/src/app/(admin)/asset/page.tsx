@@ -92,6 +92,16 @@ loadAsset();
         <th>Nama</th>
 <th>Lokasi</th>
 <th>Kondisi</th>
+</tr>
+</thead>
+<tbody>
+  {asset.map((item) => (
+  <tr key={item.id}>
+    <td>{item.nama}</td>
+    <td>{item.lokasi}</td>
+    <td>{item.kondisi}</td>
+  </tr>
+))}
   </table>
  </section>
 </article>
