@@ -2,8 +2,23 @@
 
 import { useState } from 'react';
 
+import {
+  getAsset,
+  createAsset,
+  deleteAsset,
+} from '@/services/asset.service';
+
 export default function AssetPage() {
   const [asset, setAsset] = useState<any[]>([]);
+
+  const [form, setForm] = useState({
+  nama: '',
+  deskripsi: '',
+  lokasi: '',
+  foto: '',
+  kondisi: 'BAIK',
+  kategoriId: '',
+});
   return (
     <article>
       <h2>Asset Desa</h2>
